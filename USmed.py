@@ -24,3 +24,33 @@ listfiller('insurance.csv', smoker, 'smoker')
 listfiller('insurance.csv', region, 'region')
 listfiller('insurance.csv', charges, 'charges')
 
+class PatientInfo:
+	def __init__(self, age, sex, bmi, children, smoker, region, charges):
+		self.age = age
+		self.sex = sex
+		self.bmi = bmi
+		self.children = children
+		self.smoker = smoker
+		self.region = region
+		self.charges = charges
+
+	def analyzeSmokers(self):
+		smokes = 0
+		nonsmokes = 0
+		nonsmokecharge = 0
+		smokecharge = 0
+		for smoke, charge in zip(self.smoker,self.charges):
+			if smoke == "yes":
+				smokes += 1
+				smokecharge += float(charge)
+
+			else:
+				nonsmokes += 1
+				nonsmokecharge += float(charge)
+
+		smokersdict = {'smokers': smokes, 'smokers avg insurance': smokecharge/smokes, 'non smokers': nonsmokes, 'non smokers avg insurance': nonsmokecharge/nonsmokes}
+		return smokersdict
+
+patient_info = PatientInfo(age, sex, bmi, children, smoker, region, charges)
+smokerStats = patient_info.analyzeSmokers()
+print(smokerStats)
